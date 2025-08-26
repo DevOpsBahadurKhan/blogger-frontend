@@ -1,0 +1,15 @@
+<div *ngIf="isVisible" [class]="alertClass" role="alert">
+  <div class="alert-content">
+    <mat-icon *ngIf="showIcon" class="alert-icon">{{ icon }}</mat-icon>
+    <div class="alert-message">{{ message }}</div>
+  </div>
+  <button 
+    *ngIf="dismissible" 
+    type="button" 
+    class="close" 
+    (click)="dismiss()"
+    aria-label="Close"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>

@@ -1,0 +1,121 @@
+<!-- Hero Section -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <h1>Discover & Share Knowledge</h1>
+      <p>Join our community of thinkers and readers sharing valuable insights and stories.</p>
+      <div class="cta-buttons">
+        <a mat-raised-button color="primary" routerLink="/blogs">
+          <mat-icon>rss_feed</mat-icon>
+          Read Latest Posts
+        </a>
+        <a *ngIf="!isAuthenticated" mat-stroked-button color="primary" routerLink="/auth/register">
+          <mat-icon>person_add</mat-icon>
+          Join Community
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Posts -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">Featured Posts</h2>
+    <div class="post-grid">
+      <mat-card *ngFor="let post of featuredPosts" class="post-card">
+        <div class="post-image" [style.backgroundImage]="'url(' + post.image + ')'"></div>
+        <div class="post-content">
+          <div class="post-category">{{post.category}}</div>
+          <h3>{{post.title}}</h3>
+          <p>{{post.excerpt}}</p>
+          <div class="post-meta">
+            <span class="author">{{post.author}}</span>
+            <span class="date">{{post.date | date}}</span>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</section>
+
+<!-- Categories -->
+<section class="section categories">
+  <div class="container">
+    <h2 class="section-title">Explore Topics</h2>
+    <div class="category-grid">
+      <a *ngFor="let category of categories" [routerLink]="['/category', category.slug]" class="category-card">
+        <mat-icon>{{category.icon}}</mat-icon>
+        <h3>{{category.name}}</h3>
+        <p>{{category.count}} Articles</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section class="section about">
+  <div class="container">
+    <div class="about-content">
+      <h2>About Our Blog</h2>
+      <p>Welcome to our knowledge hub where we explore diverse topics and share insights to educate and inspire.</p>
+      <div class="stats">
+        <div class="stat">
+          <div class="number">500+</div>
+          <div class="label">Articles</div>
+        </div>
+        <div class="stat">
+          <div class="number">50+</div>
+          <div class="label">Writers</div>
+        </div>
+        <div class="stat">
+          <div class="number">100K+</div>
+          <div class="label">Readers</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter -->
+<section class="newsletter">
+  <div class="container">
+    <div class="newsletter-content">
+      <h2>Stay Updated</h2>
+      <p>Subscribe to our newsletter for the latest articles</p>
+      <form class="newsletter-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Your email</mat-label>
+          <input matInput type="email" placeholder="email@example.com" required>
+          <mat-icon matSuffix>email</mat-icon>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit">
+          Subscribe
+          <mat-icon>send</mat-icon>
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="section testimonials">
+  <div class="container">
+    <h2 class="section-title">What Our Readers Say</h2>
+    <div class="testimonial-grid">
+      <mat-card *ngFor="let t of testimonials" class="testimonial-card">
+        <div class="testimonial-content">
+          <mat-icon class="quote-icon">format_quote</mat-icon>
+          <p class="testimonial-text">{{t.quote}}</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">{{t.name[0]}}</div>
+            <div class="author-info">
+              <div class="author-name">{{t.name}}</div>
+              <div class="author-role">{{t.role}}</div>
+            </div>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</section>

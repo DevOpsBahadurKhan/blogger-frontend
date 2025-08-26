@@ -1,0 +1,70 @@
+.dashboard {
+  display: grid;
+  gap: 24px;
+  padding: 24px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.title h2 {
+  margin: 0 0 8px;
+}
+
+.roles {
+  display: flex;
+  gap: 8px;
+}
+
+.chip {
+  padding: 4px 10px;
+  border-radius: 16px;
+  background: #e3f2fd;
+  color: #1565c0;
+  font-size: 12px;
+}
+
+.actions a[mat-raised-button],
+.actions a[mat-stroked-button] {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border-top: 4px solid transparent;
+}
+
+.stat .icon {
+  font-size: 32px;
+}
+
+.stat .meta .value {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.panel {
+  padding: 16px;
+}

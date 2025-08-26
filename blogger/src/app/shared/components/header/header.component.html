@@ -1,0 +1,49 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<header>
+  <div class="header-container">
+    <a routerLink="/" class="logo">
+      <span>BlogBuddy</span>
+    </a>
+
+    <button class="mobile-menu-btn" (click)="toggleMenu()" *ngIf="isMobileView">
+      <mat-icon>{{ isMenuOpen ? 'close' : 'menu' }}</mat-icon>
+    </button>
+
+    <nav [class.open]="!isMobileView || isMenuOpen">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <mat-icon>home</mat-icon>
+        <span>Home</span>
+      </a>
+
+      <a routerLink="/blogs" routerLinkActive="active">
+        <span>Blogs</span>
+      </a>
+
+    
+
+      <ng-container *ngIf="isLoggedIn; else notLoggedIn">
+        <div class="user-info">
+          <div class="user-avatar" *ngIf="currentUser">
+            {{ userInitials }}
+          </div>
+          <span class="user-name" *ngIf="currentUser?.username">{{ currentUser?.username }}</span>
+          <button class="logout-btn" *ngIf="showLogout" (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            <span>Logout</span>
+          </button>
+        </div>
+      </ng-container>
+
+      <ng-template #notLoggedIn>
+        <a routerLink="/auth/login" routerLinkActive="active">
+          <mat-icon>login</mat-icon>
+          <span>Login</span>
+        </a>
+        <a routerLink="/auth/register" routerLinkActive="active" class="register-btn">
+          <mat-icon>person_add</mat-icon>
+          <span>Register</span>
+        </a>
+      </ng-template>
+    </nav>
+  </div>
+</header>
