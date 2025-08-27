@@ -1,0 +1,191 @@
+<div class="author-dashboard">
+  <!-- Header Section -->
+  <header class="dashboard-header">
+    <div class="header-content">
+      <h1>Author Dashboard</h1>
+      <p class="welcome-message">Welcome back, <strong>{{ username }}</strong></p>
+    </div>
+    <div class="header-actions">
+      <button mat-raised-button color="primary" (click)="navigateTo('/posts/new')">
+        <mat-icon>add</mat-icon>
+        New Post
+      </button>
+    </div>
+  </header>
+
+  <!-- Stats Overview -->
+  <section class="stats-section">
+    <div class="stat-card" *ngFor="let stat of stats" [style.border-left-color]="stat.color">
+      <div class="stat-icon" [style.background]="stat.color + '20" [style.color]="stat.color">
+        <mat-icon>{{ stat.icon }}</mat-icon>
+      </div>
+      <div class="stat-details">
+        <div class="stat-value">{{ stat.value }}</div>
+        <div class="stat-title">{{ stat.title }}</div>
+        <div class="stat-change" [class.positive]="stat.change && stat.change >= 0" [class.negative]="stat.change && stat.change < 0">
+          <mat-icon *ngIf="stat.change !== undefined">
+            {{ stat.change >= 0 ? 'trending_up' : 'trending_down' }}
+          </mat-icon>
+          {{ stat.change !== undefined ? (stat.change >= 0 ? '+' + stat.change + '%' : stat.change + '%') : '' }}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <div class="dashboard-content">
+    <!-- Recent Posts -->
+    <section class="recent-posts">
+      <div class="section-header">
+        <h2>Recent Posts</h2>
+        <button mat-button color="primary" (click)="navigateTo('/posts')">View All</button>
+      </div>
+      
+      <div class="posts-grid">
+        <mat-card class="post-card" *ngFor="let post of recentPosts" (click)="navigateTo('/posts/edit/' + post.id)">
+          <div class="post-thumbnail" *ngIf="post.thumbnail" [style.backgroundImage]="'url(' + post.thumbnail + ')'">
+            <span class="status-badge" [ngClass]="getStatusClass(post.status)">
+              {{ post.status }}
+            </span>
+          </div>
+          <div class="post-content">
+            <h3 class="post-title">{{ post.title }}</h3>
+            <div class="post-meta">
+              <span class="meta-item">
+                <mat-icon>schedule</mat-icon>
+                {{ post.publishDate | date:'mediumDate' }}
+              </span>
+              <span class="meta-item">
+                <mat-icon>visibility</mat-icon>
+                {{ post.views | number }}
+              </span>
+              <span class="meta-item">
+                <mat-icon>comment</mat-icon>
+                {{ post.comments }}
+              </span>
+              <span class="meta-item">
+                <mat-icon>thumb_up</mat-icon>
+                {{ post.likes }}
+              </span>
+            </div>
+            <div class="post-actions">
+              <button mat-icon-button color="primary" (click)="$event.stopPropagation(); navigateTo('/posts/edit/' + post.id)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="$event.stopPropagation();">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <span class="reading-time">{{ post.readingTime }} read</span>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </section>
+
+    <!-- Sidebar -->
+    <aside class="dashboard-sidebar">
+      <!-- Drafts -->
+      <mat-card class="sidebar-card">
+        <div class="card-header">
+          <h3>Drafts</h3>
+          <button mat-icon-button (click)="navigateTo('/posts?status=draft')">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        </div>
+        
+        <div class="drafts-list">
+          <div class="draft-item" *ngFor="let draft of drafts" (click)="navigateTo('/posts/edit/' + draft.id)">
+            <div class="draft-info">
+              <h4>{{ draft.title }}</h4>
+              <span class="draft-date">Last edited {{ draft.publishDate | date:'mediumDate' }}</span>
+            </div>
+            <button mat-icon-button color="primary" (click)="$event.stopPropagation(); navigateTo('/posts/edit/' + draft.id)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+          
+          <div class="empty-state" *ngIf="!drafts.length">
+            <mat-icon>drafts</mat-icon>
+            <p>No drafts found</p>
+            <button mat-stroked-button color="primary" (click)="navigateTo('/posts/new')">
+              Create New Draft
+            </button>
+          </div>
+        </div>
+      </mat-card>
+
+      <!-- Scheduled Posts -->
+      <mat-card class="sidebar-card">
+        <div class="card-header">
+          <h3>Scheduled</h3>
+          <button mat-icon-button (click)="navigateTo('/posts?status=scheduled')">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        </div>
+        
+        <div class="scheduled-list">
+          <div class="scheduled-item" *ngFor="let item of scheduled">
+            <div class="scheduled-date">
+              <div class="date">{{ item.publishDate | date:'MMM d' }}</div>
+              <div class="time">{{ item.publishDate | date:'shortTime' }}</div>
+            </div>
+            <div class="scheduled-info">
+              <h4>{{ item.title }}</h4>
+              <div class="scheduled-actions">
+                <button mat-icon-button color="primary" (click)="navigateTo('/posts/edit/' + item.id)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn">
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="empty-state" *ngIf="!scheduled.length">
+            <mat-icon>schedule</mat-icon>
+            <p>No scheduled posts</p>
+          </div>
+        </div>
+      </mat-card>
+
+      <!-- Reading Stats -->
+      <mat-card class="sidebar-card">
+        <div class="card-header">
+          <h3>Reading Stats</h3>
+          <button mat-icon-button>
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        </div>
+        
+        <div class="reading-stats">
+          <div class="stat-item">
+            <div class="stat-label">Avg. Reading Time</div>
+            <div class="stat-value">{{ readingStats.avgTime }}</div>
+          </div>
+          
+          <div class="stat-item">
+            <div class="stat-label">Completion Rate</div>
+            <div class="stat-value">
+              {{ readingStats.completionRate }}%
+              <mat-progress-bar 
+                [value]="readingStats.completionRate"
+                [color]="getProgressColor(readingStats.completionRate)">
+              </mat-progress-bar>
+            </div>
+          </div>
+          
+          <div class="stat-item">
+            <div class="stat-label">Peak Reading Time</div>
+            <div class="stat-value">{{ readingStats.popularTime }}</div>
+          </div>
+          
+          <div class="stat-item">
+            <div class="stat-label">Most Active Day</div>
+            <div class="stat-value">{{ readingStats.popularDay }}</div>
+          </div>
+        </div>
+      </mat-card>
+    </aside>
+  </div>
+</div>

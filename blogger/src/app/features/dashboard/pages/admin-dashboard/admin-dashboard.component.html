@@ -1,0 +1,69 @@
+<div class="admin-dashboard">
+  <!-- Header Section -->
+  <section class="header">
+    <div class="title">
+      <h1>Admin Dashboard</h1>
+      <p class="welcome-message">Welcome back, <strong>{{ username }}</strong></p>
+    </div>
+  </section>
+
+  <!-- Stats Overview -->
+  <section class="stats-overview">
+    <h2>Overview</h2>
+    <div class="stats-grid">
+      <mat-card class="stat-card" *ngFor="let stat of stats" [style.border-left-color]="stat.color">
+        <div class="stat-content">
+          <div class="stat-icon" [style.background]="stat.color + '20">
+            <mat-icon [style.color]="stat.color">{{ stat.icon }}</mat-icon>
+          </div>
+          <div class="stat-details">
+            <div class="stat-value">{{ stat.value }}</div>
+            <div class="stat-label">{{ stat.label }}</div>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </section>
+
+  <!-- Admin Tools -->
+  <section class="admin-tools">
+    <h2>Administration</h2>
+    <div class="tools-grid">
+      <mat-card 
+        *ngFor="let card of adminCards" 
+        class="tool-card"
+        [style.border-left]="'4px solid ' + card.color"
+        (click)="navigateTo(card.link)">
+        <div class="tool-content">
+          <div class="tool-icon" [style.background]="card.color + '20">
+            <mat-icon [style.color]="card.color">{{ card.icon }}</mat-icon>
+          </div>
+          <div class="tool-details">
+            <h3>{{ card.title }}</h3>
+            <p>{{ card.description }}</p>
+          </div>
+          <mat-icon class="arrow-icon">arrow_forward</mat-icon>
+        </div>
+      </mat-card>
+    </div>
+  </section>
+
+  <!-- Quick Actions -->
+  <section class="quick-actions">
+    <h2>Quick Actions</h2>
+    <div class="actions-grid">
+      <button mat-raised-button color="primary" (click)="navigateTo('/admin/users/new')">
+        <mat-icon>person_add</mat-icon>
+        Add New User
+      </button>
+      <button mat-stroked-button color="primary" (click)="navigateTo('/admin/settings')">
+        <mat-icon>settings</mat-icon>
+        System Settings
+      </button>
+      <button mat-stroked-button color="accent" (click)="navigateTo('/admin/backup')">
+        <mat-icon>backup</mat-icon>
+        Create Backup
+      </button>
+    </div>
+  </section>
+</div>

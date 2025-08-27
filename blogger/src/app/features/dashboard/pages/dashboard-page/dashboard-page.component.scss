@@ -1,70 +1,250 @@
+// Main dashboard layout
 .dashboard {
   display: grid;
-  gap: 24px;
-  padding: 24px;
+  gap: 2rem;
+  padding: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
 }
 
+// Header section with welcome message and roles
 .header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px;
+  .title {
+    h2 {
+      margin: 0 0 0.5rem;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #1a237e;
+    }
+  }
+
+  .roles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+
+    .chip {
+      padding: 0.25rem 0.75rem;
+      border-radius: 1rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: capitalize;
+      transition: all 0.2s ease;
+
+      &.role-admin {
+        background: #ffebee;
+        color: #c62828;
+      }
+
+      &.role-editor {
+        background: #e8f5e9;
+        color: #2e7d32;
+      }
+
+      &.role-author {
+        background: #e3f2fd;
+        color: #1565c0;
+      }
+
+      &.role-reader {
+        background: #f3e5f5;
+        color: #6a1b9a;
+      }
+    }
+  }
 }
 
-.title h2 {
-  margin: 0 0 8px;
-}
-
-.roles {
-  display: flex;
-  gap: 8px;
-}
-
-.chip {
-  padding: 4px 10px;
-  border-radius: 16px;
-  background: #e3f2fd;
-  color: #1565c0;
-  font-size: 12px;
-}
-
-.actions a[mat-raised-button],
-.actions a[mat-stroked-button] {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
+// Stats cards
 .stats {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+
+  .stat {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.05);
+      font-size: 1.5rem;
+    }
+
+    .meta {
+      .value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 1.2;
+        margin: 0;
+        color: #1a237e;
+      }
+
+      .label {
+        font-size: 0.875rem;
+        color: #666;
+        margin: 0.25rem 0 0;
+      }
+    }
+  }
 }
 
-.stat {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 16px;
-  border-top: 4px solid transparent;
+// Quick Actions
+.quick-actions {
+  margin: 2rem 0;
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1a237e;
+    margin: 0 0 1rem;
+  }
+
+  .action-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .action-card {
+    padding: 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    mat-icon {
+      font-size: 2.5rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 0 0 0.5rem;
+      color: #1a237e;
+    }
+
+    p {
+      margin: 0;
+      color: #666;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+  }
 }
 
-.stat .icon {
-  font-size: 32px;
+// Role-based sections
+.role-section {
+  margin: 2rem 0;
+  padding: 1.5rem 0;
+  border-top: 1px solid #eee;
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1a237e;
+    margin: 0 0 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .dashboard-card {
+    padding: 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    mat-icon {
+      font-size: 2.5rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      margin-bottom: 1rem;
+      color: #3f51b5;
+    }
+
+    h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 0 0 0.5rem;
+      color: #1a237e;
+    }
+
+    p {
+      margin: 0;
+      color: #666;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+  }
 }
 
-.stat .meta .value {
-  font-size: 22px;
-  font-weight: 600;
+// Responsive adjustments
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+
+  .stats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .quick-actions .action-grid,
+  .role-section .card-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 16px;
-}
-
-.panel {
-  padding: 16px;
+@media (max-width: 480px) {
+  .stats,
+  .quick-actions .action-grid,
+  .role-section .card-grid {
+    grid-template-columns: 1fr;
+  }
 }

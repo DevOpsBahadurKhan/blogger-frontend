@@ -1,0 +1,167 @@
+<div class="editor-dashboard">
+  <!-- Header Section -->
+  <header class="dashboard-header">
+    <div class="header-content">
+      <h1>Editor Dashboard</h1>
+      <p class="welcome-message">Welcome back, <strong>{{ username }}</strong></p>
+    </div>
+    <div class="header-actions">
+      <button mat-raised-button color="primary" (click)="navigateTo('/posts/new')">
+        <mat-icon>add</mat-icon>
+        New Post
+      </button>
+      <button mat-stroked-button (click)="navigateTo('/moderate')">
+        <mat-icon>gavel</mat-icon>
+        Moderate Content
+      </button>
+    </div>
+  </header>
+
+  <!-- Stats Overview -->
+  <section class="stats-section">
+    <div class="stat-card">
+      <div class="stat-icon primary">
+        <mat-icon>article</mat-icon>
+      </div>
+      <div class="stat-details">
+        <div class="stat-value">{{ stats.totalPosts }}</div>
+        <div class="stat-label">Total Posts</div>
+      </div>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-icon warning">
+        <mat-icon>pending_actions</mat-icon>
+      </div>
+      <div class="stat-details">
+        <div class="stat-value">{{ stats.pendingReview }}</div>
+        <div class="stat-label">Pending Review</div>
+      </div>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-icon success">
+        <mat-icon>publish</mat-icon>
+      </div>
+      <div class="stat-details">
+        <div class="stat-value">{{ stats.publishedThisWeek }}</div>
+        <div class="stat-label">This Week</div>
+      </div>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-icon accent">
+        <mat-icon>comment</mat-icon>
+      </div>
+      <div class="stat-details">
+        <div class="stat-value">{{ stats.commentsPending }}</div>
+        <div class="stat-label">Comments to Moderate</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Two Column Layout -->
+  <div class="dashboard-content">
+    <!-- Pending Approval Column -->
+    <section class="content-section pending-approval">
+      <div class="section-header">
+        <h2>Pending Approval</h2>
+        <span class="badge">{{ pendingApproval.length }} items</span>
+      </div>
+      
+      <mat-card *ngFor="let item of pendingApproval" class="content-item" (click)="navigateTo('/moderate/' + item.type + 's')">
+        <div class="item-header">
+          <h3>{{ item.title }}</h3>
+          <span class="status-chip" [ngClass]="getStatusClass(item.status)">
+            {{ item.status }}
+          </span>
+        </div>
+        <div class="item-meta">
+          <span class="author">{{ item.author }}</span>
+          <span class="date">{{ item.date | date:'mediumDate' }}</span>
+        </div>
+        <div class="item-actions">
+          <button mat-icon-button color="primary" (click)="$event.stopPropagation();">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button mat-icon-button color="primary" (click)="$event.stopPropagation();">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="$event.stopPropagation();">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </mat-card>
+      
+      <div class="empty-state" *ngIf="!pendingApproval.length">
+        <mat-icon>check_circle</mat-icon>
+        <p>No pending items for review</p>
+      </div>
+    </section>
+
+    <!-- Recent Activity Column -->
+    <section class="content-section recent-activity">
+      <div class="section-header">
+        <h2>Recent Activity</h2>
+        <button mat-button color="primary" (click)="navigateTo('/activity')">
+          View All
+        </button>
+      </div>
+      
+      <mat-card class="content-item" *ngFor="let item of recentContent">
+        <div class="item-header">
+          <h3>{{ item.title }}</h3>
+          <span class="status-chip" [ngClass]="getStatusClass(item.status)">
+            {{ item.status }}
+          </span>
+        </div>
+        <div class="item-meta">
+          <span class="author">{{ item.author }}</span>
+          <span class="date">{{ item.date | date:'mediumDate' }}</span>
+          <span class="views" *ngIf="item.views !== undefined">
+            <mat-icon>visibility</mat-icon> {{ item.views }}
+          </span>
+          <span class="comments" *ngIf="item.comments !== undefined">
+            <mat-icon>comment</mat-icon> {{ item.comments }}
+          </span>
+        </div>
+        <div class="item-actions">
+          <button mat-icon-button color="primary" (click)="navigateTo('/posts/edit/1')">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </mat-card>
+      
+      <div class="empty-state" *ngIf="!recentContent.length">
+        <mat-icon>info</mat-icon>
+        <p>No recent activity</p>
+      </div>
+    </section>
+  </div>
+  
+  <!-- Quick Links -->
+  <section class="quick-links">
+    <h2>Quick Links</h2>
+    <div class="links-grid">
+      <button mat-stroked-button (click)="navigateTo('/categories')">
+        <mat-icon>category</mat-icon>
+        Categories
+      </button>
+      <button mat-stroked-button (click)="navigateTo('/tags')">
+        <mat-icon>label</mat-icon>
+        Tags
+      </button>
+      <button mat-stroked-button (click)="navigateTo('/media')">
+        <mat-icon>collections</mat-icon>
+        Media Library
+      </button>
+      <button mat-stroked-button (click)="navigateTo('/comments')">
+        <mat-icon>forum</mat-icon>
+        Comments
+      </button>
+    </div>
+  </section>
+</div>

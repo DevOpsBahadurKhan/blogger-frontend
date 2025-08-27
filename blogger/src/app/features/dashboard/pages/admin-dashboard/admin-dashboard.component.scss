@@ -1,0 +1,252 @@
+// Admin Dashboard Styles
+.admin-dashboard {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+
+  // Header Styles
+  .header {
+    margin-bottom: 2.5rem;
+    
+    h1 {
+      color: #1a237e;
+      margin: 0 0 0.5rem;
+      font-size: 2.2rem;
+      font-weight: 600;
+    }
+
+    .welcome-message {
+      color: #5c6bc0;
+      font-size: 1.1rem;
+      margin: 0;
+    }
+  }
+
+  // Stats Overview
+  .stats-overview {
+    margin-bottom: 3rem;
+
+    h2 {
+      color: #1a237e;
+      font-size: 1.5rem;
+      margin: 0 0 1.5rem;
+      font-weight: 500;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .stat-card {
+      border-left: 4px solid transparent;
+      border-radius: 8px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      overflow: hidden;
+      height: 100%;
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    .stat-content {
+      display: flex;
+      align-items: center;
+      padding: 1.5rem;
+    }
+
+    .stat-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 1rem;
+      flex-shrink: 0;
+
+      mat-icon {
+        font-size: 1.75rem;
+      }
+    }
+
+    .stat-details {
+      .stat-value {
+        font-size: 1.75rem;
+        font-weight: 700;
+        line-height: 1.2;
+        color: #1a237e;
+        margin: 0;
+      }
+
+      .stat-label {
+        color: #666;
+        font-size: 0.9rem;
+        margin: 0.25rem 0 0;
+      }
+    }
+  }
+
+  // Admin Tools Section
+  .admin-tools {
+    margin-bottom: 3rem;
+
+    h2 {
+      color: #1a237e;
+      font-size: 1.5rem;
+      margin: 0 0 1.5rem;
+      font-weight: 500;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .tool-card {
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      height: 100%;
+      overflow: hidden;
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+
+        .tool-content {
+          .arrow-icon {
+            transform: translateX(4px);
+            opacity: 1;
+          }
+        }
+      }
+    }
+
+    .tool-content {
+      display: flex;
+      align-items: center;
+      padding: 1.5rem;
+      position: relative;
+
+      .tool-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        margin-right: 1rem;
+        flex-shrink: 0;
+
+        mat-icon {
+          font-size: 1.75rem;
+        }
+      }
+
+      .tool-details {
+        flex: 1;
+
+        h3 {
+          margin: 0 0 0.25rem;
+          font-size: 1.1rem;
+          color: #1a237e;
+          font-weight: 600;
+        }
+
+        p {
+          margin: 0;
+          color: #666;
+          font-size: 0.9rem;
+          line-height: 1.4;
+        }
+      }
+
+      .arrow-icon {
+        color: #9e9e9e;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+        opacity: 0.8;
+        margin-left: 0.5rem;
+      }
+    }
+  }
+
+  // Quick Actions
+  .quick-actions {
+    h2 {
+      color: #1a237e;
+      font-size: 1.5rem;
+      margin: 0 0 1.5rem;
+      font-weight: 500;
+    }
+
+    .actions-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+
+      button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1.5rem;
+        border-radius: 6px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-size: 0.85rem;
+
+        mat-icon {
+          font-size: 1.25rem;
+          width: 1.25rem;
+          height: 1.25rem;
+        }
+      }
+    }
+  }
+
+  // Responsive Adjustments
+  @media (max-width: 1024px) {
+    .tools-grid {
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+
+    .stats-grid {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
+    }
+
+    .tools-grid {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)) !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+
+    .stats-grid,
+    .tools-grid {
+      grid-template-columns: 1fr !important;
+    }
+
+    .actions-grid {
+      flex-direction: column;
+      width: 100%;
+
+      button {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  }
+}
