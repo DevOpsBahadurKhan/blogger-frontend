@@ -38,7 +38,7 @@
           <a routerLink="/auth/register" class="btn btn-link">Register</a>
         </div>
         <div *ngIf="error" class="alert alert-danger">
-          {{ error }}
+          {{ error | json }}
         </div>
       </form>
     </div>
