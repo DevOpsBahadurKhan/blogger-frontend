@@ -11,29 +11,49 @@ export const AuthGuard = (requireAuth: boolean = true): CanActivateFn => {
     const authService = inject(AuthService);
     const router = inject(Router);
     
-    const currentUser = authService.currentUserValue;
-    const isAuthenticated = !!currentUser;
-    
     // If the route requires authentication but user is not authenticated
-    if (requireAuth && !isAuthenticated) {
-      router.navigate(['/auth/login'], { queryParams: { returnUrl: state.url } });
+    if (requireAuth && !authService.isAuthenticated) {
+      router.navigate(['/auth/login'], { 
+        queryParams: { returnUrl: state.url } 
+      });
       return false;
     }
     
     // If the route requires user to be unauthenticated but user is authenticated
-    if (!requireAuth && isAuthenticated) {
-      router.navigate(['/home']);
+    if (!requireAuth && authService.isAuthenticated) {
+      console.log('AuthGuard: User is authenticated, checking roles...');
+      const user = authService.currentUserValue;
+      console.log('Current user:', user);
+      
+      if (user?.roles) {
+        console.log('User roles:', user.roles);
+        if (user.roles.includes('admin')) {
+          console.log('Redirecting to admin dashboard');
+          router.navigate(['/admin']);
+        } else if (user.roles.includes('author')) {
+          console.log('Redirecting to author dashboard');
+          router.navigate(['/author']);
+        } else if (user.roles.includes('editor')) {
+          console.log('Redirecting to editor dashboard');
+          router.navigate(['/editor']);
+        } else {
+          console.log('No matching role, redirecting to home');
+          router.navigate(['/']);
+        }
+      } else {
+        console.log('No roles found for user, redirecting to home');
+        router.navigate(['/home']);
+      }
       return false;
     }
     
     // Check role-based access if roles are specified
-    if (requireAuth && route.data && route.data['roles'] && currentUser) {
-      const hasRequiredRole = route.data['roles'].some((role: string) => 
-        currentUser.roles?.includes(role)
-      );
+    if (requireAuth && route.data && route.data['roles']) {
+      const requiredRoles = route.data['roles'] as string[];
       
-      if (!hasRequiredRole) {
-        router.navigate(['/home']);
+      if (!authService.hasAnyRole(requiredRoles)) {
+        // Redirect to unauthorized or home if user doesn't have required role
+        router.navigate(['/unauthorized']);
         return false;
       }
     }

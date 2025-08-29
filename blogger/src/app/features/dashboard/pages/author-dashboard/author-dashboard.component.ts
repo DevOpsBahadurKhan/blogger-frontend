@@ -7,8 +7,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { AuthService } from '../../../../auth/services/auth.service';
-import { User } from '../../../../auth/models/user.model';
+import { AuthService } from '../../../../features/auth/services/auth.service';
+import { User } from '../../../../features/auth/models/user.model';
 
 interface BlogPost {
   id: string;

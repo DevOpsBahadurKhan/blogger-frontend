@@ -1,0 +1,56 @@
+<div class="post-list-container">
+    <div class="post-grid">
+        <mat-card *ngFor="let post of posts" class="post-card mat-elevation-z2">
+            <mat-card-header>
+                <div mat-card-avatar class="post-avatar">
+                    <mat-icon>article</mat-icon>
+                </div>
+                <mat-card-title class="post-title">{{post.title}}</mat-card-title>
+                <mat-card-subtitle class="post-meta">
+                    <span class="post-author">
+                        <mat-icon class="meta-icon">person_outline</mat-icon>
+                        {{post.User.username }}
+                    </span>
+                    <span class="post-date">
+                        <mat-icon class="meta-icon">schedule</mat-icon>
+                        {{post.createdAt | date:'mediumDate'}}
+                    </span>
+                </mat-card-subtitle>
+            </mat-card-header>
+
+            <mat-card-content class="post-content">
+                <p class="post-excerpt">
+                    {{post.content | slice:0:200}}
+                    <span *ngIf="post.content.length > 200">...</span>
+                </p>
+            </mat-card-content>
+
+            <mat-divider></mat-divider>
+
+            <mat-card-actions class="post-actions">
+                <button mat-button color="primary" [routerLink]="['/posts', post.id]" class="read-more-btn">
+                    Read More
+                    <mat-icon>arrow_forward</mat-icon>
+                </button>
+                <div class="action-buttons">
+                    <button mat-icon-button color="warn" aria-label="Like">
+                        <mat-icon>favorite_border</mat-icon>
+                        <span class="action-count">24</span>
+                    </button>
+                    <button mat-icon-button color="primary" aria-label="Share">
+                        <mat-icon>share</mat-icon>
+                    </button>
+                    <button mat-icon-button color="accent" aria-label="Bookmark">
+                        <mat-icon>bookmark_border</mat-icon>
+                    </button>
+                </div>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+
+    <div class="no-posts" *ngIf="!posts?.length">
+        <mat-icon class="empty-icon">article</mat-icon>
+        <h3>No posts available</h3>
+        <p>Check back later for new content!</p>
+    </div>
+</div>

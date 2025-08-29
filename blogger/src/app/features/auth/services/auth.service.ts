@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, throwError } from 'rxjs';
 import { User } from '../models/user.model';
 import { AuthResponse } from '../models/auth-response.model';
 import { ApiConfigService } from '../../../core/services/api-config.service';
@@ -43,17 +43,48 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
+  public get isAuthenticated(): boolean {
+    // Only return true if we have a token and a user in local storage
+    // The actual token validation will be done by the server on each request
+    return !!this.getToken() && !!this.currentUserValue;
+  }
+
+  public hasRole(role: string): boolean {
+    return this.currentUserValue?.roles?.includes(role) || false;
+  }
+
+  public hasAnyRole(roles: string[]): boolean {
+    if (!this.currentUserValue?.roles) return false;
+    return roles.some(role => this.currentUserValue?.roles?.includes(role));
+  }
+
   login(email: string, password: string) {
     return this.http.post<AuthResponse>(this.apiConfig.loginUrl, { email, password })
-      .pipe(map((res: AuthResponse) => {
-        const user = res.user;
-        const token = res.accessToken;
-        // Store user details and jwt token in local storage
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        localStorage.setItem('token', token);
-        this.currentUserSubject.next(user);
-        return user;
-      }));
+      .pipe(
+        map((res: AuthResponse) => {
+          if (!res || !res.user || !res.accessToken) {
+            throw new Error('Invalid response from server');
+          }
+          
+          const user = res.user;
+          const token = res.accessToken;
+          
+          // Only store if we have valid data
+          if (user && token) {
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            localStorage.setItem('token', token);
+            this.currentUserSubject.next(user);
+            return res;
+          }
+          
+          throw new Error('Authentication failed');
+        }),
+        catchError(error => {
+          // Clear any existing auth data on error
+          this.logout();
+          return throwError(() => error);
+        })
+      );
   }
 
   register(user: { name: string; email: string; password: string }) {
@@ -69,9 +100,5 @@ export class AuthService {
 
   getToken(): string | null {
     return localStorage.getItem('token');
-  }
-
-  isAuthenticated(): boolean {
-    return this.getToken() !== null;
   }
 }

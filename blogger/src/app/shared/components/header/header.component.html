@@ -15,13 +15,13 @@
         <span>Home</span>
       </a>
 
-      <a routerLink="/blogs" routerLinkActive="active">
+      <a routerLink="/posts" routerLinkActive="active">
         <span>Blogs</span>
       </a>
 
     
 
-      <ng-container *ngIf="isLoggedIn; else notLoggedIn">
+      <ng-container *ngIf="isAuthenticated; else notLoggedIn">
         <div class="user-info">
           <div class="user-avatar" *ngIf="currentUser">
             {{ userInitials }}

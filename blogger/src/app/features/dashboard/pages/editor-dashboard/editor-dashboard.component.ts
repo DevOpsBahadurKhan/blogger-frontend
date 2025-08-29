@@ -6,8 +6,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatChipsModule } from '@angular/material/chips';
-import { AuthService } from '../../../../auth/services/auth.service';
-import { User } from '../../../../auth/models/user.model';
+import { AuthService } from '../../../auth/services/auth.service';
+import { User } from '../../../auth/models/user.model';
 
 interface ContentItem {
   title: string;

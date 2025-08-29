@@ -16,7 +16,7 @@
   <!-- Stats Overview -->
   <section class="stats-section">
     <div class="stat-card" *ngFor="let stat of stats" [style.border-left-color]="stat.color">
-      <div class="stat-icon" [style.background]="stat.color + '20" [style.color]="stat.color">
+      <div class="stat-icon" [style.background]="stat.color + '20'" [style.color]="stat.color">
         <mat-icon>{{ stat.icon }}</mat-icon>
       </div>
       <div class="stat-details">

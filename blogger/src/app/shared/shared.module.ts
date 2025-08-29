@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-// Angular Material Modules
+// Material Modules
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
@@ -18,45 +18,42 @@ import { FooterComponent } from './components/footer/footer.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { AlertComponent } from './components/alert/alert.component';
 
+const ANGULAR_MODULES = [
+  CommonModule,
+  FormsModule,
+  ReactiveFormsModule,
+  RouterModule
+];
+
+const MATERIAL_MODULES = [
+  MatButtonModule,
+  MatInputModule,
+  MatCardModule,
+  MatToolbarModule,
+  MatIconModule,
+  MatMenuModule,
+  MatProgressSpinnerModule
+];
+
+const SHARED_COMPONENTS = [
+  HeaderComponent,
+  FooterComponent,
+  LoadingSpinnerComponent,
+  AlertComponent
+];
+
 @NgModule({
   declarations: [
-    HeaderComponent,
-    FooterComponent,
-    LoadingSpinnerComponent,
-    AlertComponent
+    ...SHARED_COMPONENTS
   ],
   imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule,
-    // Material Modules
-    MatButtonModule,
-    MatInputModule,
-    MatCardModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatMenuModule,
-    MatProgressSpinnerModule
+    ...ANGULAR_MODULES,
+    ...MATERIAL_MODULES
   ],
   exports: [
-    // Re-export modules
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    // Material Modules
-    MatButtonModule,
-    MatInputModule,
-    MatCardModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatMenuModule,
-    MatProgressSpinnerModule,
-    // Components
-    HeaderComponent,
-    FooterComponent,
-    LoadingSpinnerComponent,
-    AlertComponent
+    ...ANGULAR_MODULES,
+    ...MATERIAL_MODULES,
+    ...SHARED_COMPONENTS
   ]
 })
 export class SharedModule { }

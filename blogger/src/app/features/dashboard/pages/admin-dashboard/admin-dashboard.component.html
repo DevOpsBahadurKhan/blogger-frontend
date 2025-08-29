@@ -13,8 +13,8 @@
     <div class="stats-grid">
       <mat-card class="stat-card" *ngFor="let stat of stats" [style.border-left-color]="stat.color">
         <div class="stat-content">
-          <div class="stat-icon" [style.background]="stat.color + '20">
-            <mat-icon [style.color]="stat.color">{{ stat.icon }}</mat-icon>
+          <div class="stat-icon" [style.background]="stat.color + '20'" [style.color]="stat.color">
+            <mat-icon>{{ stat.icon }}</mat-icon>
           </div>
           <div class="stat-details">
             <div class="stat-value">{{ stat.value }}</div>
@@ -35,8 +35,8 @@
         [style.border-left]="'4px solid ' + card.color"
         (click)="navigateTo(card.link)">
         <div class="tool-content">
-          <div class="tool-icon" [style.background]="card.color + '20">
-            <mat-icon [style.color]="card.color">{{ card.icon }}</mat-icon>
+          <div class="tool-icon" [style.background]="card.color + '20'" [style.color]="card.color">
+            <mat-icon>{{ card.icon }}</mat-icon>
           </div>
           <div class="tool-details">
             <h3>{{ card.title }}</h3>

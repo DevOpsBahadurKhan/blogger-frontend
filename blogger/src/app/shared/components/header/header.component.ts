@@ -73,13 +73,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-  get isLoggedIn(): boolean {
-    return this.authService.isAuthenticated();
+  get isAuthenticated(): boolean {
+    return this.authService.isAuthenticated;
   }
 
   get currentUser(): User | null {
-    console.log(this.authService.currentUserValue);
-    
+
     return this.authService.currentUserValue;
   }
 
@@ -101,7 +100,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   // Show logout only on dashboard when authenticated; hide on home
   get showLogout(): boolean {
-    if (!this.isLoggedIn) return false;
+    if (!this.isAuthenticated) return false;
     return this.currentUrl?.startsWith('/dashboard');
   }
 }
